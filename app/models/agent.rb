@@ -1,3 +1,3 @@
 class Agent < ApplicationRecord
-    belong_to :supervisor
+    belongs_to :supervisor
 end

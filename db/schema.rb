@@ -10,17 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_24_155503) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_26_134127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
     t.string "name"
-    t.string "tasks", default: [], array: true
-    t.integer "number"
+    t.string "tasks"
+    t.integer "phone_number"
     t.string "current_location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_agents_on_id", unique: true
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.integer "phone_number"
+    t.string "tasks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_customers_on_id", unique: true
+  end
+
+  create_table "supervisors", force: :cascade do |t|
+    t.string "name"
+    t.string "tasks"
+    t.integer "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_supervisors_on_id", unique: true
   end
 
 end
