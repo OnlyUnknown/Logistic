@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_28_121239) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_29_113602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_121239) do
     t.index ["id"], name: "index_customers_on_id", unique: true
   end
 
+  create_table "supervisions", force: :cascade do |t|
+    t.bigint "supervisor_id", null: false
+    t.bigint "agent_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agent_id"], name: "index_supervisions_on_agent_id"
+    t.index ["supervisor_id"], name: "index_supervisions_on_supervisor_id"
+  end
+
   create_table "supervisors", force: :cascade do |t|
     t.string "name"
     t.string "tasks"
@@ -42,4 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_121239) do
     t.index ["id"], name: "index_supervisors_on_id", unique: true
   end
 
+  add_foreign_key "supervisions", "agents"
+  add_foreign_key "supervisions", "supervisors"
 end
