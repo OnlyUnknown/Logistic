@@ -4,7 +4,7 @@ class CreateCustomers < ActiveRecord::Migration[7.0]
       t.index :id, unique: true
       t.string :name
       t.integer :phone_number
-      t.string :tasks
+      t.string :tasks, array: true, default: []
 
       t.timestamps
     end

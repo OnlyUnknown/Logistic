@@ -3,7 +3,7 @@ class CreateAgents < ActiveRecord::Migration[7.0]
     create_table :agents do |t|
       t.index :id, unique: true
       t.string :name
-      t.string :tasks
+      t.string :tasks, array: true, default: []
       t.integer :phone_number
       t.string :current_location
 

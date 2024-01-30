@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
 
   create_table "agents", force: :cascade do |t|
     t.string "name"
-    t.string "tasks"
+    t.string "tasks", default: [], array: true
     t.integer "phone_number"
     t.string "current_location"
     t.datetime "created_at", null: false
@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.integer "phone_number"
-    t.string "tasks"
+    t.string "tasks", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_customers_on_id", unique: true
@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
 
   create_table "supervisors", force: :cascade do |t|
     t.string "name"
-    t.string "tasks"
+    t.string "tasks", default: [], array: true
     t.integer "phone_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
