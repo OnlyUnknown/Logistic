@@ -1,7 +1,8 @@
 require "test_helper"
 
 class AgentControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should get show" do
+    get agent_show_url
+    assert_response :success
+  end
 end
