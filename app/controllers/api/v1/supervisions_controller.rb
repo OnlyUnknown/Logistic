@@ -1,6 +1,6 @@
 class Api::V1::SupervisionsController < ApplicationController
   def index
-    @supervision = Supervision.all
+    @supervision = Supervision.find(params[:id])l
     if @supervision
       render json: @supervision
     else
