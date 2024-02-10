@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'agent/:id', to: 'agents#index'
       get 'supervisor/:id', to: 'supervisors#index'
       get 'customer/:id', to: 'customers#index'
+      post 'supervision/add', to: 'supervisions#create'
     end
   end
 end
