@@ -1,6 +1,6 @@
-class CreateTesks < ActiveRecord::Migration[7.0]
+class CreateTasks < ActiveRecord::Migration[7.0]
   def change
-    create_table :tesks do |t|
+    create_table :tasks do |t|
       t.string :product
       t.string :sender
       t.integer :quantity
