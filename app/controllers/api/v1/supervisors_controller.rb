@@ -7,5 +7,4 @@ class Api::V1::SupervisorsController < ApplicationController
       render json: @supervisor.errors.full_messages
     end
   end
-
 end
