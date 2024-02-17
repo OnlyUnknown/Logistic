@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_14_131115) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["agent_id"], name: "index_supervisions_on_agent_id"
+    t.index ["supervisor_id", "agent_id"], name: "index_supervisions_on_supervisor_id_and_agent_id", unique: true
     t.index ["supervisor_id"], name: "index_supervisions_on_supervisor_id"
   end
 
