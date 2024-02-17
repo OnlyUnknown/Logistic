@@ -1,9 +1,9 @@
 class Api::V1::TasksController < ApplicationController
     def create
-        @supervision = Supervision.new(supervision_params)
+        @task = Task.new(task_params)
     
-        if @supervision.save
-          redirect_to @supervision
+        if @task.save
+          redirect_to @task
         else
           render 'new'
         end
@@ -11,7 +11,7 @@ class Api::V1::TasksController < ApplicationController
     
       private
     
-      def supervision_params
-        params.require(:supervision).permit(:supervisor_id, :agent_id)
+      def task_params
+        params.require(:task).permit(:supervisor_id, :product, :sender, :quantity, :receiver, :status, :price, :current_location, :total,)
       end
 end
