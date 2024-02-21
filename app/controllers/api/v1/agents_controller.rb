@@ -1,6 +1,6 @@
 class Api::V1::AgentsController < ApplicationController
-  def show
-    @agent = Agent.all
+  def index
+    @agent = Agent.find(params[:id])
     if @agent
       render json: @agent
     else

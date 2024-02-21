@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
-      resource :agents, only: %i[show]
+      get 'agent/:id', to: 'agents#index'
+      get 'supervisor/:id', to: 'supervisors#index'
+      get 'customer/:id', to: 'customers#index'
+      post 'supervision/add', to: 'supervisions#create'
     end
   end
 end

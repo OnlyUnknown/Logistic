@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_14_131115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["agent_id"], name: "index_supervisions_on_agent_id"
+    t.index ["supervisor_id", "agent_id"], name: "index_supervisions_on_supervisor_id_and_agent_id", unique: true
     t.index ["supervisor_id"], name: "index_supervisions_on_supervisor_id"
   end
 
@@ -51,6 +52,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_130356) do
     t.index ["id"], name: "index_supervisors_on_id", unique: true
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "supervisor_id", null: false
+    t.string "product"
+    t.string "sender"
+    t.integer "quantity"
+    t.integer "receiver"
+    t.string "status"
+    t.float "price"
+    t.string "current_location"
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supervisor_id"], name: "index_tasks_on_supervisor_id"
+  end
+
   add_foreign_key "supervisions", "agents"
   add_foreign_key "supervisions", "supervisors"
+  add_foreign_key "tasks", "supervisors"
 end
