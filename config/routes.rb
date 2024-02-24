@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
+      root 'agents#index'
       get 'agent/:id', to: 'agents#index'
       get 'supervisor/:id', to: 'supervisors#index'
       get 'customer/:id', to: 'customers#index'
