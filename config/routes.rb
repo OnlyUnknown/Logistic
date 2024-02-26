@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  namespace :api do
-    namespace :v1 do
+  scope :api do
+    scope :v1 do
+      devise_for :agents
       get 'agent/:id', to: 'agents#index'
       get 'supervisor/:id', to: 'supervisors#index'
       get 'customer/:id', to: 'customers#index'
