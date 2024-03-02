@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   # root "articles#index"
   scope :api do
     scope :v1 do
-      devise_for :agents
+      devise_for :agents, path: '', path_names: {
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'sign_up'
+      }
       get 'agent/:id', to: 'agents#index'
       get 'supervisor/:id', to: 'supervisors#index'
       get 'customer/:id', to: 'customers#index'
