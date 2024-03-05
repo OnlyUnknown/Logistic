@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   scope :api do
     scope :v1 do
-      devise_for :agents, path: '', path_names: {
+      devise_for :agents, path: '/agent', path_names: {
         sign_in: 'login',
         sign_out: 'logout',
         registration: 'sign_up'
