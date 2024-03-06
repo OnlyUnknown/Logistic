@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         sign_in: 'login',
         sign_out: 'logout',
         registration: 'sign_up'
-      }
+      },  controllers: { sessions: "agents/sessions" }
       get 'agent/:id', to: 'agents#index'
       get 'supervisor/:id', to: 'supervisors#index'
       get 'customer/:id', to: 'customers#index'
