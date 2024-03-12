@@ -8,7 +8,7 @@ class Api::V1::Customers::SessionsController < Devise::SessionsController
     render json: {
       status: { 
         code: 200, message: 'Logged in successfully.',
-        data: { user: UserSerializer.new(current_user).serializable_hash[:data][:attributes] }
+        data: { user: CusotmerSerializer.new(current_user).serializable_hash[:data][:attributes] }
       }
     }, status: :ok
   end
