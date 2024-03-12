@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::Supervisors::RegistrationsController < Devise::RegistrationsController
+  include RackSessionsFix
   respond_to :json
   private
 
