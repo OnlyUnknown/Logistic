@@ -8,14 +8,14 @@ class Api::V1::Customers::SessionsController < Devise::SessionsController
     render json: {
       status: { 
         code: 200, message: 'Logged in successfully.',
-        data: { user: CusotmerSerializer.new(current_user).serializable_hash[:data][:attributes] }
+        data: { user: CustomerSerializer.new(current_user).serializable_hash[:data][:attributes] }
       }
     }, status: :ok
   end
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
       jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, Rails.application.credentials.devise_jwt_secret_key!).first
-      current_user = User.find(jwt_payload['sub'])
+      current_user = Customer.find(jwt_payload['sub'])
     end
     
     if current_user
