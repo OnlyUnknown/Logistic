@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get 'supervisor/:id', to: 'api/v1/supervisors#index'
       get 'customer/:id', to: 'api/v1/customers#index'
       post 'supervision/add', to: 'api/v1/supervisions#create'
+      post 'task/create', to: 'api/v1/supervisors#create_task'
     end
   end
 end
