@@ -20,6 +20,11 @@ class Api::V1::SupervisorsController < ApplicationController
     end
   end
 
+  def delete_task
+    before_destroy :check_supervisor
+    @task = Task.find(r_task).destroy
+  end
+
   private
   
   def task_params
@@ -31,8 +36,15 @@ class Api::V1::SupervisorsController < ApplicationController
   def generate_task_id
     loop do
       timestamp = rand 100000000000...999999999999
-    random_id = "a#{timestamp}"
+    random_id = "#{timestamp}"
     return random_id unless Task.exists?(id: random_id)
+    end
+  end
+
+  def check_supervisor
+    unless @task.supervisor_id == current_supervisor.id
+      errors.add(:base, "You don't have permission to delete this task")
+      throw(:abort)
     end
   end
 end
