@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get 'customer/:id', to: 'api/v1/customers#index'
       post 'supervision/add', to: 'api/v1/supervisions#create'
       post 'task/create', to: 'api/v1/supervisors#create_task'
+      delete 'task/delete', to: 'api/v1/supervisors#delete_task'
     end
   end
 end

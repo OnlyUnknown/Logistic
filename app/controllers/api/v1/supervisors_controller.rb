@@ -1,6 +1,5 @@
 class Api::V1::SupervisorsController < ApplicationController
   before_action :authenticate_supervisor!, only: [:create_task]
-
   def index
     @supervisor = current_supervisor
     if @supervisor
@@ -21,18 +20,29 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   def delete_task
-    before_destroy :check_supervisor
-    @task = Task.find(r_task).destroy
+    @task = Task.find(r_task_params[:task])
+    check_supervisor(@task)
+    @task.destroy
+    render json: { message: "Task deleted successfully" }
   end
+
 
   private
   
   def task_params
     supervisor = current_supervisor
     random_id = generate_task_id
-    params.require(:task).permit(:agent_id, :customer_id, :product, :quantity, :price, :total).merge(id: random_id, status: "pending", supervisor: supervisor)
+    current_status = task_status
+    params.require(:task).permit(:agent_id, :customer_id, :product, :quantity, :price, :total).merge(id: random_id, status: current_status, supervisor: supervisor)
   end
 
+  def task_status
+    if params[:task][:agent_id].nil?
+      "pending"
+    else
+      "on the way"
+    end
+  end
   def generate_task_id
     loop do
     random_id = rand 100000000000...999999999999
@@ -40,10 +50,13 @@ class Api::V1::SupervisorsController < ApplicationController
     end
   end
 
-  def check_supervisor
-    unless @task.supervisor_id == current_supervisor.id
-      errors.add(:base, "You don't have permission to delete this task")
-      throw(:abort)
+  def r_task_params
+    params.permit(:task)
+  end
+
+  def check_supervisor(task)
+    unless task.supervisor_id == current_supervisor.id
+      raise ActiveRecord::RecordNotDestroyed, "You don't have permission to delete this task"
     end
   end
 end
