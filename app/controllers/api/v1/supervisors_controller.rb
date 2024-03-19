@@ -30,13 +30,12 @@ class Api::V1::SupervisorsController < ApplicationController
   def task_params
     supervisor = current_supervisor
     random_id = generate_task_id
-    params.require(:task).permit(:agent_id, customer_id, :product, :quantity, :price, :total).merge(id: random_id, status: "pending", supervisor: supervisor)
+    params.require(:task).permit(:agent_id, :customer_id, :product, :quantity, :price, :total).merge(id: random_id, status: "pending", supervisor: supervisor)
   end
 
   def generate_task_id
     loop do
-      timestamp = rand 100000000000...999999999999
-    random_id = "#{timestamp}"
+    random_id = rand 100000000000...999999999999
     return random_id unless Task.exists?(id: random_id)
     end
   end
