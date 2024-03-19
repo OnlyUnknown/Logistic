@@ -82,20 +82,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_154843) do
   create_table "tasks", force: :cascade do |t|
     t.bigint "supervisor_id", null: false
     t.string "product"
-    t.string "sender"
+    t.bigint "agent_id"
     t.integer "quantity"
-    t.integer "receiver"
+    t.bigint "customer_id"
     t.string "status"
     t.float "price"
     t.string "current_location"
     t.float "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["agent_id"], name: "index_tasks_on_agent_id"
+    t.index ["customer_id"], name: "index_tasks_on_customer_id"
     t.index ["id"], name: "index_tasks_on_id", unique: true
     t.index ["supervisor_id"], name: "index_tasks_on_supervisor_id"
   end
 
   add_foreign_key "supervisions", "agents"
   add_foreign_key "supervisions", "supervisors"
+  add_foreign_key "tasks", "agents"
+  add_foreign_key "tasks", "customers"
   add_foreign_key "tasks", "supervisors"
 end
