@@ -5,7 +5,7 @@ class Api::V1::SupervisorsController < ApplicationController
     if @supervisor
       render json: @supervisor
     else
-      render json: { error: "Supervisor not found" }, status: :not_found
+      render json: { error: 'Supervisor not found' }, status: :not_found
     end
   end
 
@@ -23,30 +23,32 @@ class Api::V1::SupervisorsController < ApplicationController
     @task = Task.find(r_task_params[:task])
     check_supervisor(@task)
     @task.destroy
-    render json: { message: "Task deleted successfully" }
+    render json: { message: 'Task deleted successfully' }
   end
 
-
   private
-  
+
   def task_params
     supervisor = current_supervisor
     random_id = generate_task_id
     current_status = task_status
-    params.require(:task).permit(:agent_id, :customer_id, :product, :quantity, :price, :total).merge(id: random_id, status: current_status, supervisor: supervisor)
+    params.require(:task).permit(:agent_id, :customer_id,
+                                 :product, :quantity, :price, :total).merge(id: random_id,
+                                                                            status: current_status, supervisor:)
   end
 
   def task_status
     if params[:task][:agent_id].nil?
-      "pending"
+      'pending'
     else
-      "on the way"
+      'on Delivery'
     end
   end
+
   def generate_task_id
     loop do
-    random_id = rand 100000000000...999999999999
-    return random_id unless Task.exists?(id: random_id)
+      random_id = rand 100_000_000_000...999_999_999_999
+      return random_id unless Task.exists?(id: random_id)
     end
   end
 
@@ -55,8 +57,8 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   def check_supervisor(task)
-    unless task.supervisor_id == current_supervisor.id
-      raise ActiveRecord::RecordNotDestroyed, "You don't have permission to delete this task"
-    end
+    return if task.supervisor_id == current_supervisor.id
+
+    raise ActiveRecord::RecordNotDestroyed, "You don't have permission to delete this task"
   end
 end
