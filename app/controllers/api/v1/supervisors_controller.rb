@@ -11,7 +11,8 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def create_task
     @task = Task.new(task_params)
-
+    
+    check_supervision(@task.agent_id)
     if @task.save
       render json: @task
     else
@@ -54,6 +55,12 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def r_task_params
     params.permit(:task)
+  end
+
+  def check_supervision(agent_id)
+    return if Supervision.exists?(supervisor_id: current_supervisor.id, agent_id: agent_id)
+  
+    raise ActiveRecord::RecordNotDestroyed, "The agent isn't in your supervision"
   end
 
   def check_supervisor(task)
