@@ -20,6 +20,17 @@ class Api::V1::SupervisorsController < ApplicationController
     end
   end
 
+  def edit_task
+    @task = Task.find(params[:id])
+    
+    if @task.update(task_params)
+      check_supervision(@task.agent_id)
+    check_supervisor(@task)
+      render json: { message: 'Task updated successfully' }
+    else
+      render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
   def delete_task
     @task = Task.find(r_task_params[:task])
     check_supervisor(@task)
