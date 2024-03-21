@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       post 'supervision/add', to: 'api/v1/supervisions#create'
       post 'task/create', to: 'api/v1/supervisors#create_task'
       delete 'task/delete', to: 'api/v1/supervisors#delete_task'
+      patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
     end
   end
 end

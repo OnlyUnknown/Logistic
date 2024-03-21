@@ -11,8 +11,9 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def create_task
     @task = Task.new(task_params)
-    
+    if @task.agent_id != nil
     check_supervision(@task.agent_id)
+    end
     if @task.save
       render json: @task
     else
@@ -20,12 +21,14 @@ class Api::V1::SupervisorsController < ApplicationController
     end
   end
 
-  def edit_task
+  def update_task
     @task = Task.find(params[:id])
     
-    if @task.update(task_params)
+    if @task.update(tasku_params)
+      check_supervisor(@task)
+      if @task.agent_id != nil
       check_supervision(@task.agent_id)
-    check_supervisor(@task)
+      end
       render json: { message: 'Task updated successfully' }
     else
       render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
@@ -46,7 +49,14 @@ class Api::V1::SupervisorsController < ApplicationController
     current_status = task_status
     params.require(:task).permit(:agent_id, :customer_id,
                                  :product, :quantity, :price, :total).merge(id: random_id,
-                                                                            status: current_status, supervisor:)
+                                                                            status: current_status, supervisor: current_supervisor)
+  end
+
+  def tasku_params
+    current_status = task_status
+    params.require(:task).permit(:agent_id, :customer_id,
+                                 :product, :quantity, :price, :total).merge(
+                                                                            status: current_status)
   end
 
   def task_status
