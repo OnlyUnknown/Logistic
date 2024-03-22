@@ -11,9 +11,7 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def create_task
     @task = Task.new(task_params)
-    if @task.agent_id != nil
-    check_supervision(@task.agent_id)
-    end
+    check_supervision(@task.agent_id) unless @task.agent_id.nil?
     if @task.save
       render json: @task
     else
@@ -23,17 +21,16 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def update_task
     @task = Task.find(params[:id])
-    
+
     if @task.update(tasku_params)
       check_supervisor(@task)
-      if @task.agent_id != nil
-      check_supervision(@task.agent_id)
-      end
+      check_supervision(@task.agent_id) unless @task.agent_id.nil?
       render json: { message: 'Task updated successfully' }
     else
       render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
   def delete_task
     @task = Task.find(r_task_params[:task])
     check_supervisor(@task)
@@ -44,19 +41,30 @@ class Api::V1::SupervisorsController < ApplicationController
   private
 
   def task_params
-    supervisor = current_supervisor
+    current_supervisor
     random_id = generate_task_id
     current_status = task_status
-    params.require(:task).permit(:agent_id, :customer_id,
-                                 :product, :quantity, :price, :total).merge(id: random_id,
-                                                                            status: current_status, supervisor: current_supervisor)
+
+    params.require(:task).permit(
+      :agent_id,
+      :customer_id,
+      :product,
+      :quantity,
+      :price,
+      :total
+    ).merge(
+      id: random_id,
+      status: current_status,
+      supervisor: current_supervisor
+    )
   end
 
   def tasku_params
     current_status = task_status
     params.require(:task).permit(:agent_id, :customer_id,
                                  :product, :quantity, :price, :total).merge(
-                                                                            status: current_status)
+                                   status: current_status
+                                 )
   end
 
   def task_status
@@ -79,8 +87,8 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   def check_supervision(agent_id)
-    return if Supervision.exists?(supervisor_id: current_supervisor.id, agent_id: agent_id)
-  
+    return if Supervision.exists?(supervisor_id: current_supervisor.id, agent_id:)
+
     raise ActiveRecord::RecordNotDestroyed, "The agent isn't in your supervision"
   end
 
