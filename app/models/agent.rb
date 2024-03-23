@@ -6,4 +6,5 @@ class Agent < ApplicationRecord
          :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
   has_many :supervisions
   has_many :supervisors, through: :supervisions
+  has_many :tasks
 end

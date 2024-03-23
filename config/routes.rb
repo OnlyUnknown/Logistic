@@ -33,10 +33,13 @@ Rails.application.routes.draw do
     registrations: 'api/v1/customers/registrations'
   }
   
-      get 'agent/:id', to: 'agents#index'
-      get 'supervisor/:id', to: 'supervisors#index'
-      get 'customer/:id', to: 'customers#index'
-      post 'supervision/add', to: 'supervisions#create'
+      get 'agent/:id', to: 'api/v1/agents#index'
+      get 'supervisor/:id', to: 'api/v1/supervisors#index'
+      get 'customer/:id', to: 'api/v1/customers#index'
+      post 'supervision/add', to: 'api/v1/supervisions#create'
+      post 'task/create', to: 'api/v1/supervisors#create_task'
+      delete 'task/delete', to: 'api/v1/supervisors#delete_task'
+      patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
     end
   end
 end
