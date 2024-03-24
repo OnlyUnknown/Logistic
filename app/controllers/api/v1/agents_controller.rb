@@ -13,7 +13,7 @@ class Api::V1::AgentsController < ApplicationController
   def accept_task
     @task = Task.find(params[:id])
     check_supervision(@task.supervisor_id)
-    @task.update(agent_id: current_agent, status: "on delivery")
+    @task.update(agent_id: current_agent, status: "on delivery") unless @task.agent_id.nil?
 
     render json: { message: 'Task accepted successfully' }
   end
