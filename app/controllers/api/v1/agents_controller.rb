@@ -1,5 +1,5 @@
 class Api::V1::AgentsController < ApplicationController
-  before_action authenticate_agent! only: [:accept_task]
+  before_action :authenticate_agent!, only: [:accept_task]
   
   def index
     @agent = Agent.find(params[:id])

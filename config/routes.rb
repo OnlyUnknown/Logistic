@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       post 'task/create', to: 'api/v1/supervisors#create_task'
       delete 'task/delete', to: 'api/v1/supervisors#delete_task'
       patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
+      patch 'agent/accept/:id', to: 'api/v1/agents#accept_task'
     end
   end
 end
