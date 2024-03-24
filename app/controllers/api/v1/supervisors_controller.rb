@@ -1,5 +1,5 @@
 class Api::V1::SupervisorsController < ApplicationController
-  before_action :authenticate_supervisor!, only: [:create_task]
+  before_action :authenticate_supervisor!, only: [:create_task, :delete_task, :update_task]
   def index
     @supervisor = current_supervisor
     if @supervisor
@@ -87,7 +87,7 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   def check_supervision(agent_id)
-    return if Supervision.exists?(supervisor_id: current_supervisor.id, agent_id:)
+    return if Supervision.exists?(supervisor_id: current_supervisor.id, agent_id:agent_id)
 
     raise ActiveRecord::RecordNotDestroyed, "The agent isn't in your supervision"
   end
