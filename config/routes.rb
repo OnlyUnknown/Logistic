@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       delete 'task/delete', to: 'api/v1/supervisors#delete_task'
       patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
       patch 'agent/accept/:id', to: 'api/v1/agents#accept_task'
+      patch 'agent/remove/:id', to: 'api/v1/agents#remove_task'
     end
   end
 end
