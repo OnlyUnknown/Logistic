@@ -32,7 +32,8 @@ Rails.application.routes.draw do
     sessions: 'api/v1/customers/sessions',
     registrations: 'api/v1/customers/registrations'
   }
-  
+
+  get 'agent/mytaskslist', to: 'api/v1/agents#mytasks_list'
       get 'agent/:id', to: 'api/v1/agents#index'
       get 'supervisor/:id', to: 'api/v1/supervisors#index'
       get 'customer/:id', to: 'api/v1/customers#index'
