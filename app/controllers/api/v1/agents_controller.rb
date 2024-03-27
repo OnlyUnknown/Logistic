@@ -34,7 +34,7 @@ class Api::V1::AgentsController < ApplicationController
         @task.update(agent_id: nil, status: "pending") 
         render json: { message: 'Task removed successfully' }
       else
-        render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: "Something went wrong" }, status: :unprocessable_entity
       end
     end
   end
