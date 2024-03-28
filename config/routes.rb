@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
       patch 'agent/accept/:id', to: 'api/v1/agents#accept_task'
       patch 'agent/remove/:id', to: 'api/v1/agents#remove_task'
+      get 'agent/own/mysupervisors', to: 'api/v1/agents#my_supervisors'
     end
   end
 end
