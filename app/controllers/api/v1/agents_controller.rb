@@ -17,7 +17,8 @@ class Api::V1::AgentsController < ApplicationController
   
   def my_supervisors
     @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)
-    render json: @supervisors
+  @s = Supervisor.where(id: @supervisors).select(:id, :name, :phone_number)
+  render json: @s
   end
 
   def accept_task
