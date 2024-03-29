@@ -1,49 +1,64 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   scope :api do
     scope :v1 do
+      # Devise routes for agents
       devise_for :agents, path: 'agents', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
-  controllers: {
-    sessions: 'api/v1/agents/sessions',
-    registrations: 'api/v1/agents/registrations'
-  }
-  devise_for :supervisors, path: 'supervisors', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
-  controllers: {
-    sessions: 'api/v1/supervisors/sessions',
-    registrations: 'api/v1/supervisors/registrations'
-  }
-  devise_for :customers, path: 'customers', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
-  controllers: {
-    sessions: 'api/v1/customers/sessions',
-    registrations: 'api/v1/customers/registrations'
-  }
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'signup'
+      }, controllers: {
+        sessions: 'api/v1/agents/sessions',
+        registrations: 'api/v1/agents/registrations'
+      }
 
-  get 'agent/mytaskslist', to: 'api/v1/agents#mytasks_list'
-      get 'agent/index', to: 'api/v1/agents#index'
-      get 'supervisor/:id', to: 'api/v1/supervisors#index'
-      get 'customer/:id', to: 'api/v1/customers#index'
+      # Devise routes for supervisors
+      devise_for :supervisors, path: 'supervisors', path_names: {
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'signup'
+      }, controllers: {
+        sessions: 'api/v1/supervisors/sessions',
+        registrations: 'api/v1/supervisors/registrations'
+      }
+
+      # Devise routes for customers
+      devise_for :customers, path: 'customers', path_names: {
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'signup'
+      }, controllers: {
+        sessions: 'api/v1/customers/sessions',
+        registrations: 'api/v1/customers/registrations'
+      }
+
+      # Agents routes
+      scope :agents do
+        get 'mytaskslist', to: 'api/v1/agents#mytasks_list'
+        get 'index', to: 'api/v1/agents#index'
+        patch 'accept/:id', to: 'api/v1/agents#accept_task'
+        patch 'remove/:id', to: 'api/v1/agents#remove_task'
+        get 'own/mysupervisors', to: 'api/v1/agents#my_supervisors'
+      end
+
+      # Supervisors routes
+      resources :supervisors, only: [] do
+        get ':id', to: 'api/v1/supervisors#index', on: :collection
+      end
+
+      # Customers routes
+      resources :customers, only: [] do
+        get ':id', to: 'api/v1/customers#index', on: :collection
+      end
+
+      # Supervision routes
       post 'supervision/add', to: 'api/v1/supervisions#create'
-      post 'task/create', to: 'api/v1/supervisors#create_task'
-      delete 'task/delete', to: 'api/v1/supervisors#delete_task'
-      patch 'task/update/:id', to: 'api/v1/supervisors#update_task'
-      patch 'agent/accept/:id', to: 'api/v1/agents#accept_task'
-      patch 'agent/remove/:id', to: 'api/v1/agents#remove_task'
-      get 'agent/own/mysupervisors', to: 'api/v1/agents#my_supervisors'
+
+      # Task routes
+      resources :tasks, only: [] do
+        post 'create', to: 'api/v1/supervisors#create_task', on: :collection
+        delete 'delete', to: 'api/v1/supervisors#delete_task', on: :collection
+        patch 'update/:id', to: 'api/v1/supervisors#update_task', on: :collection
+      end
     end
   end
 end
