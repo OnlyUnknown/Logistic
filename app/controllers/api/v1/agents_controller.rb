@@ -21,6 +21,13 @@ class Api::V1::AgentsController < ApplicationController
   render json: @s
   end
 
+  def my_supervisors_tasks
+    @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)
+    @s = Supervisor.includes(:tasks).where(id: @supervisors).select(:id, :name, :phone_number)
+    render json: @s, include: :tasks
+  end
+  
+
   def accept_task
     @task = Task.find(params[:id])
     check_supervision(@task.supervisor_id)
@@ -54,7 +61,7 @@ class Api::V1::AgentsController < ApplicationController
   def check_supervision(supervisor_id)
     return if Supervision.exists?(supervisor_id:supervisor_id, agent_id:current_agent.id)
 
-    raise ActiveRecord::RecordNotDestroyed, "The agent isn't in your supervision"
+    raise ActiveRecord::RecordNotDestroyed, "The task isn't under you supervisors"
   end
 
 end
