@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   }
 
   get 'agent/mytaskslist', to: 'api/v1/agents#mytasks_list'
-      get 'agent/:id', to: 'api/v1/agents#index'
+      get 'agent/index', to: 'api/v1/agents#index'
       get 'supervisor/:id', to: 'api/v1/supervisors#index'
       get 'customer/:id', to: 'api/v1/customers#index'
       post 'supervision/add', to: 'api/v1/supervisions#create'

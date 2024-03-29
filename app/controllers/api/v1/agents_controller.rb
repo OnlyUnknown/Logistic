@@ -2,7 +2,7 @@ class Api::V1::AgentsController < ApplicationController
   before_action :authenticate_agent!, only: [:accept_task, :remove_task, :mytasks_list, :my_supervisors, :my_supervisors_tasks]
   
   def index
-    @agent = Agent.find(params[:id])
+    @agent = current_agent
     if @agent
       render json: @agent
     else
