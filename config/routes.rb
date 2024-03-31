@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       # Agents routes
       scope :agents do
         get 'mytaskslist', to: 'api/v1/agents#mytasks_list'
-        get 'index', to: 'api/v1/agents#index'
+        get 'profile', to: 'api/v1/agents#profile'
         patch 'accept/:id', to: 'api/v1/agents#accept_task'
         patch 'remove/:id', to: 'api/v1/agents#remove_task'
         get 'own/mysupervisors', to: 'api/v1/agents#my_supervisors'
