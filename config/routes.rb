@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       # Customers routes
       resources :customers, only: [] do
         get 'profile', to: 'api/v1/customers#profile', on: :collection
+        patch 'profile/update', to: 'api/v1/customers#update_customer', on: :collection
       end
 
       # Supervision routes

@@ -9,15 +9,20 @@ class Api::V1::CustomersController < ApplicationController
     end
   end
 
-  def update_task
-    @task = Task.find(params[:id])
+  def update_customer
+    @customer = current_customer
 
-    if @task.update(tasku_params)
-      check_supervisor(@task)
-      check_supervision(@task.agent_id) unless @task.agent_id.nil?
-      render json: { message: 'Task updated successfully' }
+    if @customer.update(customeru_params)
+      render json: { message: 'customer updated successfully' }
     else
-      render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @customer.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  private
+  def customeru_params
+    params.require(:customer).permit(:name, :phone_number,
+                                 :email
+                                 )
   end
 end
