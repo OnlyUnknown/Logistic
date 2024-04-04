@@ -1,7 +1,7 @@
 class Api::V1::AgentsController < ApplicationController
   before_action :authenticate_agent!,
                 only: %i[accept_task remove_task
-                 mytasks_list my_supervisors my_supervisors_tasks profile]
+                         mytasks_list my_supervisors my_supervisors_tasks profile]
 
   def profile
     @agent = current_agent
@@ -70,8 +70,7 @@ class Api::V1::AgentsController < ApplicationController
 
   def agentu_params
     params.require(:agent).permit(:name, :phone_number,
-                                 :email
-                                 )
+                                  :email)
   end
 
   def check_supervision(supervisor_id)

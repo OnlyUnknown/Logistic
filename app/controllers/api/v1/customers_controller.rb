@@ -20,9 +20,9 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   private
+
   def customeru_params
     params.require(:customer).permit(:name, :phone_number,
-                                 :email
-                                 )
+                                     :email)
   end
 end

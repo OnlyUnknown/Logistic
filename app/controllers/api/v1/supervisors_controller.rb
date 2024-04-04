@@ -52,8 +52,7 @@ class Api::V1::SupervisorsController < ApplicationController
 
   def supervisoru_params
     params.require(:supervisor).permit(:name, :phone_number,
-                                 :email
-                                 )
+                                       :email)
   end
 
   def task_params
