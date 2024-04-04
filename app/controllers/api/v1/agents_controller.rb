@@ -12,6 +12,16 @@ class Api::V1::AgentsController < ApplicationController
     end
   end
 
+  def update_agent
+    @agent = current_agent
+
+    if @agent.update(agentu_params)
+      render json: { message: 'agent updated successfully' }
+    else
+      render json: { errors: @agent.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def mytasks_list
     @list = Task.where(agent_id: current_agent.id)
     render json: @list
@@ -57,6 +67,12 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   private
+
+  def agentu_params
+    params.require(:agent).permit(:name, :phone_number,
+                                 :email
+                                 )
+  end
 
   def check_supervision(supervisor_id)
     return if Supervision.exists?(supervisor_id:, agent_id: current_agent.id)
