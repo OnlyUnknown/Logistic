@@ -1,7 +1,7 @@
 class Api::V1::CustomersController < ApplicationController
   before_action :authenticate_customer!, except: [:index]
-  def index
-    @customer = Customer.find(params[:id])
+  def profile
+    @customer = current_customer
     if @customer
       render json: @customer
     else

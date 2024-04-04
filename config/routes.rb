@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
       # Customers routes
       resources :customers, only: [] do
-        get ':id', to: 'api/v1/customers#index', on: :collection
+        get 'profile', to: 'api/v1/customers#profile', on: :collection
       end
 
       # Supervision routes
