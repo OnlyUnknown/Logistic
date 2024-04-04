@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       scope :agents do
         get 'mytaskslist', to: 'api/v1/agents#mytasks_list'
         get 'profile', to: 'api/v1/agents#profile'
-        patch 'profile/update', to: 'api/v1/agents#profile'
+        patch 'profile/update', to: 'api/v1/agents#update_agent'
         patch 'accept/:id', to: 'api/v1/agents#accept_task'
         patch 'remove/:id', to: 'api/v1/agents#remove_task'
         get 'own/mysupervisors', to: 'api/v1/agents#my_supervisors'
@@ -43,7 +43,8 @@ Rails.application.routes.draw do
 
       # Supervisors routes
       resources :supervisors, only: [] do
-        get ':id', to: 'api/v1/supervisors#index', on: :collection
+        get 'profile', to: 'api/v1/supervisors#profile', on: :collection
+        patch 'profile/update', to: 'api/v1/supervisors#update_supervisor', on: :collection
       end
 
       # Customers routes

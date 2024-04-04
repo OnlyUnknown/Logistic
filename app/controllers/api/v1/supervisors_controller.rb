@@ -1,11 +1,21 @@
 class Api::V1::SupervisorsController < ApplicationController
   before_action :authenticate_supervisor!, only: %i[create_task delete_task update_task]
-  def index
+  def profile
     @supervisor = current_supervisor
     if @supervisor
       render json: @supervisor
     else
       render json: { error: 'Supervisor not found' }, status: :not_found
+    end
+  end
+
+  def update_supervisor
+    @supervisor = current_supervisor
+
+    if @supervisor.update(supervisoru_params)
+      render json: { message: 'supervisor updated successfully' }
+    else
+      render json: { errors: @supervisor.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -39,6 +49,12 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   private
+
+  def supervisoru_params
+    params.require(:supervisor).permit(:name, :phone_number,
+                                 :email
+                                 )
+  end
 
   def task_params
     current_supervisor
