@@ -1,6 +1,7 @@
 class Api::V1::AgentsController < ApplicationController
   before_action :authenticate_agent!,
-                only: %i[accept_task remove_task mytasks_list my_supervisors my_supervisors_tasks]
+                only: %i[accept_task remove_task
+                         mytasks_list my_supervisors my_supervisors_tasks profile]
 
   def profile
     @agent = current_agent
@@ -8,6 +9,16 @@ class Api::V1::AgentsController < ApplicationController
       render json: @agent
     else
       render json: @agent.errors.full_messages
+    end
+  end
+
+  def update_agent
+    @agent = current_agent
+
+    if @agent.update(agentu_params)
+      render json: { message: 'agent updated successfully' }
+    else
+      render json: { errors: @agent.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -56,6 +67,11 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   private
+
+  def agentu_params
+    params.require(:agent).permit(:name, :phone_number,
+                                  :email)
+  end
 
   def check_supervision(supervisor_id)
     return if Supervision.exists?(supervisor_id:, agent_id: current_agent.id)
