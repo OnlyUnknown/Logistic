@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_11_154843) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_08_155614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_154843) do
     t.index ["supervisor_id"], name: "index_supervisions_on_supervisor_id"
   end
 
+  create_table "supervisor_requests", force: :cascade do |t|
+    t.bigint "agent_id", null: false
+    t.bigint "supervisor_id", null: false
+    t.boolean "accepted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agent_id"], name: "index_supervisor_requests_on_agent_id"
+    t.index ["supervisor_id"], name: "index_supervisor_requests_on_supervisor_id"
+  end
+
   create_table "supervisors", force: :cascade do |t|
     t.string "name"
     t.string "tasks", default: [], array: true
@@ -99,6 +109,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_154843) do
 
   add_foreign_key "supervisions", "agents"
   add_foreign_key "supervisions", "supervisors"
+  add_foreign_key "supervisor_requests", "agents"
+  add_foreign_key "supervisor_requests", "supervisors"
   add_foreign_key "tasks", "agents"
   add_foreign_key "tasks", "customers"
   add_foreign_key "tasks", "supervisors"
