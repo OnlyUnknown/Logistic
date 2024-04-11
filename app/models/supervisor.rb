@@ -10,5 +10,7 @@ class Supervisor < ApplicationRecord
   has_many :tasks
   has_many :supervisor_requests, foreign_key: :supervisor_id, dependent: :destroy
   has_many :pending_agents, through: :supervisor_requests, source: :agent
-  has_many :agents, foreign_key: :agent_id, class_name: 'SupervisorRequest', dependent: :destroy
+  has_many :agents, through: :supervisor_requests
+  has_many :supervisions, dependent: :destroy
+  has_many :superviseds, through: :supervisions
 end
