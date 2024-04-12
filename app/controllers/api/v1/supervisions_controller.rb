@@ -1,26 +1,18 @@
 class Api::V1::SupervisionsController < ApplicationController
+  before_action :set_supervision, only: [:show, :destroy]
+
   def index
-    @supervision = Supervision.find(params[:id])
-    if @supervision
-      render json: @supervision
-    else
-      render json: @supervision.errors.full_messages
-    end
+    @friends = current_supervisor.friends
   end
 
-  def create
-    @supervision = Supervision.new(supervision_params)
-
-    if @supervision.save
-      redirect_to @supervision
-    else
-      render 'new'
-    end
+  def destroy
+    current_supervisor.remove_friend(@supervision.agent)
+    head :no_content
   end
 
   private
 
-  def supervision_params
-    params.require(:supervision).permit(:supervisor_id, :agent_id)
+  def set_supervision
+    @supervision = Supervision.find(params[:id])
   end
 end

@@ -1,4 +1,4 @@
-class SupervisorRequestsController < ApplicationController
+class Api::V1::SupervisorRequestsController < ApplicationController
     before_action :set_supervisor_request, only: [:show, :destroy]
   
     def index
