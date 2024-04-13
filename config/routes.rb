@@ -46,6 +46,11 @@ Rails.application.routes.draw do
         get 'profile', to: 'api/v1/supervisors#profile', on: :collection
         patch 'profile/update', to: 'api/v1/supervisors#update_supervisor', on: :collection
       end
+      
+      # SupervisorRequest routes
+      resources :supervisor_requests, only: [] do
+        post 'create/:agent_id', to: 'api/v1/supervisor_requests#create', on: :collection
+      end
 
       # Customers routes
       resources :customers, only: [] do
