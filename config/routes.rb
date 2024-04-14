@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       
       # SupervisorRequest routes
       resources :supervisor_requests, only: [] do
+        get 'inbox', to: 'api/v1/supervisor_requests#index', on: :collection
         post 'create/:agent_id', to: 'api/v1/supervisor_requests#create', on: :collection
       end
 
