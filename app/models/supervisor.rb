@@ -8,6 +8,4 @@ class Supervisor < ApplicationRecord
   has_many :supervisions
   has_many :agents, through: :supervisions
   has_many :tasks
-  has_many :friend_requests, dependent: :destroy
-  has_many :pending_friends, through: :friend_requests, source: :friend
 end

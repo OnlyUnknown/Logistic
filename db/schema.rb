@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_16_132734) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_11_154843) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,20 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_132734) do
     t.index ["id"], name: "index_customers_on_id", unique: true
     t.index ["jti"], name: "index_customers_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
-  end
-
-  create_table "friend_requests", force: :cascade do |t|
-    t.bigint "supervisor_id", null: false
-    t.bigint "friend_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["friend_id"], name: "index_friend_requests_on_friend_id"
-    t.index ["supervisor_id"], name: "index_friend_requests_on_supervisor_id"
-  end
-
-  create_table "friends", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "supervisions", force: :cascade do |t|
@@ -111,8 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_132734) do
     t.index ["supervisor_id"], name: "index_tasks_on_supervisor_id"
   end
 
-  add_foreign_key "friend_requests", "friends"
-  add_foreign_key "friend_requests", "supervisors"
   add_foreign_key "supervisions", "agents"
   add_foreign_key "supervisions", "supervisors"
   add_foreign_key "tasks", "agents"
