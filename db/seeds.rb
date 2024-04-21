@@ -5,3 +5,22 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Supervisor.create(email:'1@email.com', 
+password: '123123',
+password_confirmation: '123123')
+
+Supervisor.create(email:'2@email.com', 
+password: '123123',
+password_confirmation: '123123')
+
+Agent.create(email:'1@email.com', 
+password: '123123',
+password_confirmation: '123123')
+
+Agent.create(email:'2@email.com', 
+password: '123123',
+password_confirmation: '123123')
+
+Customer.create(email:'1@email.com', 
+password: '123123',
+password_confirmation: '123123')
