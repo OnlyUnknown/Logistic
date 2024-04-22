@@ -57,12 +57,13 @@ Rails.application.routes.draw do
       post 'supervision/add', to: 'api/v1/supervisions#create'
 
       #followability routes
-      post 'profile/:id/follow', to: 'profile#follow', as: 'follow'
-      post 'profile/:id/unfollow', to: 'profile#unfollow', as: 'unfollow'
-      post 'profile/:id/accept', to: 'profile#accept', as: 'accept'
-      post 'profile/:id/decline', to: 'profile#decline', as: 'decline'
-      post 'profile/:id/cancel', to: 'profile#cancel', as: 'cancel'
-
+      resources :profiles, only: [] do
+      post '/:id/follow', to: 'api/v1/profile#follow', as: 'follow', on: :collection
+      post '/:id/unfollow', to: 'api/v1/profile#unfollow', as: 'unfollow', on: :collection
+      post '/:id/accept', to: 'api/v1/profile#accept', as: 'accept', on: :collection
+      post '/:id/decline', to: 'api/v1/profile#decline', as: 'decline', on: :collection
+      post '/:id/cancel', to: 'api/v1/profile#cancel', as: 'cancel', on: :collection
+        end
 
       # Task routes
       resources :tasks, only: [] do
