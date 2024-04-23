@@ -10,4 +10,8 @@ followability
   has_many :agents, through: :supervisions
   has_many :tasks
   
+  def unfollow(supervisor)
+    followerable_relationships.where(followable_id: user.id).destroy_all
+  end
+
 end
