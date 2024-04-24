@@ -1,12 +1,30 @@
 class Api::V1::ProfileController < ApplicationController
     before_action :authenticate_supervisor!
-   before_action :set_supervisor
-    def show
+   before_action :set_supervisor, except: [:pending, :show_followers] 
+    def show_followers
+        render json: current_supervisor.followers
     end
 
+    def follow_request
+        render json: current_supervisor.follow_requests
+    end
+
+    def pending
+        render json: current_supervisor.pending_requests
+    end
+
+   
+
     def follow
-        current_supervisor.send_follow_request_to(@supervisor)
-        redirect_to profile_path(@supervisor)
+        if current_supervisor.send_follow_request_to(@supervisor)
+        render json: { message: 'follow request sent successfully' }
+    else
+    render json: current_supervisor.errors.full_messages
+    end
+    end
+
+    def pending
+        render json: current_supervisor.pending_requests
     end
     
     def unfollow
@@ -27,8 +45,11 @@ class Api::V1::ProfileController < ApplicationController
     end
 
     def cancel
-        current_supervisor.remove_follow_request_of(@supervisor)
-        redirect_to profile_path(@supervisor)
+        if current_supervisor.remove_follow_request_for(@supervisor)
+            render json: { message: 'follow request removed successfully' }
+        else
+        render json: current_supervisor.errors.full_messages
+        end
     end
 
     private

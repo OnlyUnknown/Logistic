@@ -58,12 +58,15 @@ Rails.application.routes.draw do
 
       #followability routes
       resources :profiles, only: [] do
-      post '/:id/follow', to: 'api/v1/profile#follow', as: 'follow', on: :collection
-      post '/:id/unfollow', to: 'api/v1/profile#unfollow', as: 'unfollow', on: :collection
-      post '/:id/accept', to: 'api/v1/profile#accept', as: 'accept', on: :collection
-      post '/:id/decline', to: 'api/v1/profile#decline', as: 'decline', on: :collection
-      post '/:id/cancel', to: 'api/v1/profile#cancel', as: 'cancel', on: :collection
-        end
+        post '/:id/follow', to: 'api/v1/profile#follow', as: 'follow', on: :collection
+        post '/:id/unfollow', to: 'api/v1/profile#unfollow', as: 'unfollow', on: :collection
+        post '/:id/accept', to: 'api/v1/profile#accept', as: 'accept', on: :collection
+        post '/:id/decline', to: 'api/v1/profile#decline', as: 'decline', on: :collection
+        post '/:id/cancel', to: 'api/v1/profile#cancel', as: 'cancel', on: :collection
+        get 'followers', to: 'api/v1/profile#show_followers', as: 'show_friends', on: :collection
+        get 'pending', to: 'api/v1/profile#pending', as: 'pending', on: :collection
+        get 'follow_requests', to: 'api/v1/profile#follow_requests', as: 'requests', on: :collection
+      end
 
       # Task routes
       resources :tasks, only: [] do
