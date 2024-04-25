@@ -1,19 +1,27 @@
 class Api::V1::ProfileController < ApplicationController
     before_action :authenticate_supervisor!
+
    before_action :set_supervisor, except: [:pending, :show_followers] 
     def show_followers
         render json: current_supervisor.followers
     end
 
     def follow_request
-        render json: current_supervisor.follow_requests
-    end
+        if current_agent
+          render json: current_agent.follow_requests
+        elsif current_supervisor
+          render json: current_supervisor.follow_requests
+        elsif current_customer
+          render json: current_customer.follow_requests
+        else
+          render json: { error: "No user found" }, status: :unprocessable_entity
+        end
+      end
+      
 
     def pending
         render json: current_supervisor.pending_requests
     end
-
-   
 
     def follow
         if current_supervisor.send_follow_request_to(@supervisor)
