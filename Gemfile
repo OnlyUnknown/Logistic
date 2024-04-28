@@ -52,4 +52,4 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
 
-gem "followability", "~> 1.1"
+gem 'followability', '~> 1.1'
