@@ -1,14 +1,14 @@
-class Api::V1::SprofileController < ApplicationController
+class Api::V1::AprofileController < ApplicationController
     before_action :authenticate_supervisor!
 
    before_action  :set_user, only: [:follow, :accept, :cancel, :decline, :unfollow] 
     def show_followers
-        render json: current_supervisor.followers
+        render json: current_agent.followers
     end
 
     def follow_request
-        if current_supervisor
-          render json: current_supervisor.follow_requests
+        if current_agent
+          render json: current_agent.follow_requests
         else
           render json: { error: "No user found" }, status: :unprocessable_entity
         end
@@ -16,61 +16,61 @@ class Api::V1::SprofileController < ApplicationController
       
 
     def pending
-        render json: current_supervisor.pending_requests
+        render json: current_agent.pending_requests
     end
     
     def follow
-        if current_supervisor.send_follow_request_to(@user)
+        if current_agent.send_follow_request_to(@user)
         render json: { message: 'follow request sent successfully' }
     else
-    render json: current_supervisor.errors.full_messages
+    render json: current_agent.errors.full_messages
     end
     end
     
     def unfollow
         make_it_a_unfriend_request
-        if current_supervisor.unfollow(@user)
+        if current_agent.unfollow(@user)
             render json: { message: 'the user has been unfollowed successfully' }
         else
-            render json: current_supervisor.errors.full_messages
+            render json: current_agent.errors.full_messages
         end
     end
 
     def accept
-        if current_supervisor.accept_follow_request_of(@user)
+        if current_agent.accept_follow_request_of(@user)
         make_it_a_friend_request
         render json: { message: 'The follow requested has been accepted successfully' }
     else
-        render json: current_supervisor.errors.full_messages
+        render json: current_agent.errors.full_messages
         end
 
     end
 
     def decline
-        if current_supervisor.decline_follow_request_of(@user)
+        if current_agent.decline_follow_request_of(@user)
             render json: { message: 'The follow request has been declined successfully' }
     else
-        render json: current_supervisor.errors.full_messages
+        render json: current_agent.errors.full_messages
         end
     end
 
     def cancel
-        if current_supervisor.remove_follow_request_for(@user)
+        if current_agent.remove_follow_request_for(@user)
             render json: { message: 'follow request removed successfully' }
         else
-        render json: current_supervisor.errors.full_messages
+        render json: current_agent.errors.full_messages
         end
     end
 
     private
 
     def make_it_a_friend_request
-        current_supervisor.send_follow_request_to(@user)
-        @user.accept_follow_request_of(current_supervisor)
+        current_agent.send_follow_request_to(@user)
+        @user.accept_follow_request_of(current_agent)
     end
 
     def make_it_a_unfriend_request
-        @user.unfollow(current_supervisor) if @user.mutal_following_with?(current_supervisor)
+        @user.unfollow(current_agent) if @user.mutal_following_with?(current_agent)
     end
 
     def set_user
