@@ -1,5 +1,6 @@
 class Api::V1::SupervisorsController < ApplicationController
-  before_action :authenticate_supervisor!, only: %i[create_task delete_task update_task]
+  before_action :authenticate_supervisor!, only: %i[create_task
+                                                    delete_task update_task]
   def profile
     @supervisor = current_supervisor
     if @supervisor
