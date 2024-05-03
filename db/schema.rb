@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_20_145212) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_03_143000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_20_145212) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "jti", null: false
+    t.string "current_state"
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["id"], name: "index_agents_on_id", unique: true
     t.index ["jti"], name: "index_agents_on_jti", unique: true
@@ -45,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_20_145212) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "jti", null: false
+    t.string "availability"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["id"], name: "index_customers_on_id", unique: true
     t.index ["jti"], name: "index_customers_on_jti", unique: true
