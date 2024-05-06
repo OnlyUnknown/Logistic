@@ -6,7 +6,7 @@ class Api::V1::AprofileController < ApplicationController
     render json: current_agent.followers
   end
 
-  def follow_request
+  def follow_requests
     if current_agent
       render json: current_agent.follow_requests
     else

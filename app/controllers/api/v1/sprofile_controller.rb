@@ -20,6 +20,7 @@ class Api::V1::SprofileController < ApplicationController
 
   def follow
     if current_supervisor.send_follow_request_to(@user)
+
       render json: { message: 'follow request sent successfully' }
     else
       render json: current_supervisor.errors.full_messages
