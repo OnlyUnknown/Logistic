@@ -3,7 +3,7 @@ class Api::V1::CprofileController < ApplicationController
 
   before_action :set_user, only: %i[follow accept cancel decline unfollow]
   def show_followers
-    render json: current_customer.followers
+    render json: current_customer.followerable_relationships
   end
 
   def follow_request
