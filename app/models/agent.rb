@@ -9,7 +9,4 @@ class Agent < ApplicationRecord
   has_many :supervisors, through: :supervisions
   has_many :tasks
 
-  def unfollow(_user)
-    followerable_relationships.where(followable_id: user.id).destroy_all
-  end
 end
