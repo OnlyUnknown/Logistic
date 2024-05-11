@@ -52,4 +52,4 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
 
-gem 'acts_as_follower'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'

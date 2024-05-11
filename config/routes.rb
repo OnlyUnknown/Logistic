@@ -56,29 +56,36 @@ Rails.application.routes.draw do
       # Supervision routes
       post 'supervision/add', to: 'api/v1/supervisions#create'
 
-      #followability routes for supervisor
-      resources :sprofiles, only: [] do
-        post '/:id/follow', to: 'api/v1/sprofile#follow', as: 'follow', on: :collection
-        post '/:id/unfollow', to: 'api/v1/sprofile#unfollow', as: 'unfollow', on: :collection
-        post '/:id/accept', to: 'api/v1/sprofile#accept', as: 'accept', on: :collection
-        post '/:id/decline', to: 'api/v1/sprofile#decline', as: 'decline', on: :collection
-        post '/:id/cancel', to: 'api/v1/sprofile#cancel', as: 'cancel', on: :collection
-        get 'followers', to: 'api/v1/sprofile#show_followers', as: 'show_friends', on: :collection
-        get 'pending', to: 'api/v1/sprofile#pending', as: 'pending', on: :collection
-        get 'follow_requests', to: 'api/v1/sprofile#follow_requests', as: 'requests', on: :collection
+      #follow routes for the supervision and the agen
+      resources :supervision, only: [] do
+        post '/:id/add', to: 'api/v1/fsupervisor#add', on: :collection
+        get '/count', to: 'api/v1/fsupervisor#add_count', on: :collection
+
       end
 
+      #followability routes for supervisor
+      # resources :sprofiles, only: [] do
+      #   post '/:id/follow', to: 'api/v1/sprofile#follow', as: 'follow', on: :collection
+      #   post '/:id/unfollow', to: 'api/v1/sprofile#unfollow', as: 'unfollow', on: :collection
+      #   post '/:id/accept', to: 'api/v1/sprofile#accept', as: 'accept', on: :collection
+      #   post '/:id/decline', to: 'api/v1/sprofile#decline', as: 'decline', on: :collection
+      #   post '/:id/cancel', to: 'api/v1/sprofile#cancel', as: 'cancel', on: :collection
+      #   get 'followers', to: 'api/v1/sprofile#show_followers', as: 'show_friends', on: :collection
+      #   get 'pending', to: 'api/v1/sprofile#pending', as: 'pending', on: :collection
+      #   get 'follow_requests', to: 'api/v1/sprofile#follow_requests', as: 'requests', on: :collection
+      # end
+
       #followability routes for agent
-      resources :aprofiles, only: [] do
-        post '/:id/follow', to: 'api/v1/aprofile#follow', as: 'follow', on: :collection
-        post '/:id/unfollow', to: 'api/v1/aprofile#unfollow', as: 'unfollow', on: :collection
-        post '/:id/accept', to: 'api/v1/aprofile#accept', as: 'accept', on: :collection
-        post '/:id/decline', to: 'api/v1/aprofile#decline', as: 'decline', on: :collection
-        post '/:id/cancel', to: 'api/v1/aprofile#cancel', as: 'cancel', on: :collection
-        get 'followers', to: 'api/v1/aprofile#show_followers', as: 'show_friends', on: :collection
-        get 'pending', to: 'api/v1/aprofile#pending', as: 'pending', on: :collection
-        get 'follow_requests', to: 'api/v1/aprofile#follow_requests', as: 'requests', on: :collection
-      end
+      # resources :aprofiles, only: [] do
+      #   post '/:id/follow', to: 'api/v1/aprofile#follow', as: 'follow', on: :collection
+      #   post '/:id/unfollow', to: 'api/v1/aprofile#unfollow', as: 'unfollow', on: :collection
+      #   post '/:id/accept', to: 'api/v1/aprofile#accept', as: 'accept', on: :collection
+      #   post '/:id/decline', to: 'api/v1/aprofile#decline', as: 'decline', on: :collection
+      #   post '/:id/cancel', to: 'api/v1/aprofile#cancel', as: 'cancel', on: :collection
+      #   get 'followers', to: 'api/v1/aprofile#show_followers', as: 'show_friends', on: :collection
+      #   get 'pending', to: 'api/v1/aprofile#pending', as: 'pending', on: :collection
+      #   get 'follow_requests', to: 'api/v1/aprofile#follow_requests', as: 'requests', on: :collection
+      # end
 
 
 
