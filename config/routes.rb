@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       #follow routes for the supervision and the agen
       resources :supervision, only: [] do
         post '/:id/add', to: 'api/v1/fsupervisor#add', on: :collection
+        post '/:id/remove', to: 'api/v1/fsupervisor#remove', on: :collection
         get '/count', to: 'api/v1/fsupervisor#add_count', on: :collection
 
       end
