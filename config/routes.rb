@@ -62,7 +62,7 @@ Rails.application.routes.draw do
         post '/:id/remove', to: 'api/v1/fsupervisor#remove', on: :collection
         get '/count', to: 'api/v1/fsupervisor#add_count', on: :collection
         get '/:id/is_added', to: 'api/v1/fsupervisor#added?', on: :collection
-
+        get '/under_supervision', to: 'api/v1/fsupervisor#under_supervision', on: :collection
 
       end
 

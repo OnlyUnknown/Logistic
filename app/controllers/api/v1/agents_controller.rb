@@ -28,10 +28,14 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   def my_supervisors
-    @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)
-    @s = Supervisor.where(id: @supervisors).select(:id, :name, :phone_number)
-    render json: @s
+    render json: current_agent.all_following
   end
+
+  # def my_supervisors
+  #   @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)
+  #   @s = Supervisor.where(id: @supervisors).select(:id, :name, :phone_number)
+  #   render json: @s
+  # end
 
   def my_supervisors_tasks
     @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)

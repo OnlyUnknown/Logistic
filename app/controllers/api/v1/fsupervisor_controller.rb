@@ -2,6 +2,10 @@ class Api::V1::FsupervisorController < ApplicationController
   before_action :authenticate_supervisor!
   before_action :set_user, only: %i[add added? remove]
 
+  def under_supervision
+    render json: current_supervisor.all_following
+  end
+
   def add
     if current_supervisor.following?(@user) == true
       render json: { message: "The #{@user.name} agent is under your supervision" }
