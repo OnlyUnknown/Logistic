@@ -4,13 +4,10 @@ class Supervisor < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
-  followability
+  acts_as_followable
+  acts_as_follower
 
   has_many :supervisions
   has_many :agents, through: :supervisions
   has_many :tasks
-
-  def unfollow(_supervisor)
-    followerable_relationships.where(followable_id: user.id).destroy_all
-  end
 end

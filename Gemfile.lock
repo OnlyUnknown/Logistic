@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/tcocca/acts_as_follower.git
+  revision: c5ac7b9601c4af01eb4d9112330b27be4d694ecc
+  branch: master
+  specs:
+    acts_as_follower (0.2.1)
+      activerecord (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -96,7 +104,6 @@ GEM
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     erubi (1.12.0)
-    followability (1.1.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -203,11 +210,11 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  acts_as_follower!
   bootsnap
   debug
   devise
   devise-jwt
-  followability (~> 1.1)
   jsonapi-serializer
   pg (~> 1.1)
   puma (~> 5.0)
