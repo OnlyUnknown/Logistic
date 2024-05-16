@@ -41,9 +41,6 @@ Rails.application.routes.draw do
         patch 'remove/:id', to: 'api/v1/agents#remove_task'
         get 'own/mysupervisors', to: 'api/v1/agents#my_supervisors'
         get 'mysupervisors/tasks', to: 'api/v1/agents#my_supervisors_tasks2'
-        get 'mysupervisors/tasks1', to: 'api/v1/agents#my_supervisors_tasks'
-
-
       end
 
       # Supervisors routes
