@@ -39,8 +39,8 @@ class Api::V1::AgentsController < ApplicationController
 
   def my_supervisors_tasks2
     @supervisors = current_agent.all_following
-  @tasks = Task.includes(:supervisor).where(supervisor: { id: @supervisors })
-  render json: @tasks
+    @tasks = Task.includes(:supervisor).where(supervisor: { id: @supervisors })
+    render json: @tasks
   end
 
   def accept_task
