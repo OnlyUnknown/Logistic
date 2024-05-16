@@ -1,7 +1,7 @@
 class Api::V1::AgentsController < ApplicationController
   before_action :authenticate_agent!,
                 only: %i[accept_task remove_task
-                         mytasks_list my_supervisors my_supervisors_tasks profile]
+                         mytasks_list my_supervisors my_supervisors_tasks2 profile]
 
   def profile
     @agent = current_agent
@@ -36,6 +36,12 @@ class Api::V1::AgentsController < ApplicationController
   #   @s = Supervisor.where(id: @supervisors).select(:id, :name, :phone_number)
   #   render json: @s
   # end
+
+  def my_supervisors_tasks2
+    @supervisors = current_agent.all_following
+  @tasks = Task.includes(:supervisor).where(supervisor: { id: @supervisors })
+  render json: @tasks
+  end
 
   def my_supervisors_tasks
     @supervisors = Supervision.where(agent_id: current_agent.id).pluck(:supervisor_id)
