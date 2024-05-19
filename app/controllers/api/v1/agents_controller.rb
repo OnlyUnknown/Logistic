@@ -24,7 +24,7 @@ class Api::V1::AgentsController < ApplicationController
 
   def mytasks_list
     @list = Task.where(agent_id: current_agent.id)
-    render json: @list
+    render json: @list, :except=> [:confirmation_code]
   end
 
   def my_supervisors

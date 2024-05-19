@@ -24,7 +24,7 @@ class Api::V1::SupervisorsController < ApplicationController
     @task = Task.new(task_params)
     check_supervision(@task.agent_id) unless @task.agent_id.nil?
     if @task.save
-      render json: @task
+      render json: @task, :except=> [:confirmation_code]
     else
       render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
     end
