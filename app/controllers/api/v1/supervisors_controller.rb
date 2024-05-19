@@ -60,7 +60,7 @@ class Api::V1::SupervisorsController < ApplicationController
     current_supervisor
     random_id = generate_task_id
     current_status = task_status
-
+    random_code = generate_task_code
     params.require(:task).permit(
       :agent_id,
       :customer_id,
@@ -71,7 +71,8 @@ class Api::V1::SupervisorsController < ApplicationController
     ).merge(
       id: random_id,
       status: current_status,
-      supervisor: current_supervisor
+      supervisor: current_supervisor,
+      confirmation_code: random_code
     )
   end
 
@@ -89,6 +90,10 @@ class Api::V1::SupervisorsController < ApplicationController
     else
       'on Delivery'
     end
+  end
+
+  def generate_task_code
+    random_code = rand 100000...999999
   end
 
   def generate_task_id
