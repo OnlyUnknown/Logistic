@@ -24,7 +24,7 @@ class Api::V1::SupervisorsController < ApplicationController
     @task = Task.new(task_params)
     check_supervision(@task.agent_id) unless @task.agent_id.nil?
     if @task.save
-      render json: @task, :except=> [:confirmation_code]
+      render json: @task, except: [:confirmation_code]
     else
       render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
     end
@@ -93,7 +93,7 @@ class Api::V1::SupervisorsController < ApplicationController
   end
 
   def generate_task_code
-    random_code = rand 100000...999999
+    rand 100_000...999_999
   end
 
   def generate_task_id

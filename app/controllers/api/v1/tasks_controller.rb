@@ -10,8 +10,8 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def show_task
-    @task = Task.where(id:params[:id])
-    render json: @task, :except => [:confirmation_code]
+    @task = Task.where(id: params[:id])
+    render json: @task, except: [:confirmation_code]
   end
 
   private
