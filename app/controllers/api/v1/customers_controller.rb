@@ -9,6 +9,11 @@ class Api::V1::CustomersController < ApplicationController
     end
   end
 
+  def mytasks_list
+    @list = Task.where(customer_id: current_customer.id)
+    render json: @list
+  end
+
   def update_customer
     @customer = current_customer
 

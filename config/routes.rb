@@ -35,12 +35,12 @@ Rails.application.routes.draw do
       scope :agents do
         get 'mytaskslist', to: 'api/v1/agents#mytasks_list'
         get 'profile', to: 'api/v1/agents#profile'
-
         patch 'profile/update', to: 'api/v1/agents#update_agent'
         patch 'accept/:id', to: 'api/v1/agents#accept_task'
         patch 'remove/:id', to: 'api/v1/agents#remove_task'
         get 'own/mysupervisors', to: 'api/v1/agents#my_supervisors'
         get 'mysupervisors/tasks', to: 'api/v1/agents#my_supervisors_tasks2'
+        post '/:id/task_confirmation', to: 'api/v1/agents#confirm_delivery'
       end
 
       # Supervisors routes
@@ -65,7 +65,6 @@ Rails.application.routes.draw do
         get '/count', to: 'api/v1/fsupervisor#add_count', on: :collection
         get '/:id/is_added', to: 'api/v1/fsupervisor#added?', on: :collection
         get '/under_supervision', to: 'api/v1/fsupervisor#under_supervision', on: :collection
-
       end
 
       #followability routes for supervisor
@@ -99,6 +98,7 @@ Rails.application.routes.draw do
         post 'create', to: 'api/v1/supervisors#create_task', on: :collection
         delete 'delete', to: 'api/v1/supervisors#delete_task', on: :collection
         patch 'update/:id', to: 'api/v1/supervisors#update_task', on: :collection
+        get '/:id', to: 'api/v1/tasks#show_task', on: :collection
       end
     end
   end

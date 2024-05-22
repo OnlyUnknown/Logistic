@@ -103,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_11_130810) do
     t.bigint "customer_id"
     t.string "status"
     t.float "price"
+    t.integer "confirmation_code"
     t.string "current_location"
     t.float "total"
     t.datetime "created_at", null: false

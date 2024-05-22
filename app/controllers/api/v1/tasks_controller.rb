@@ -9,6 +9,11 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  def show_task
+    @task = Task.where(id: params[:id])
+    render json: @task, except: [:confirmation_code]
+  end
+
   private
 
   def generate_task_id

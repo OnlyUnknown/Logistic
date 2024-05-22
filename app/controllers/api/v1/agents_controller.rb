@@ -24,7 +24,21 @@ class Api::V1::AgentsController < ApplicationController
 
   def mytasks_list
     @list = Task.where(agent_id: current_agent.id)
-    render json: @list
+    render json: @list, except: [:confirmation_code]
+  end
+
+  def confirm_delivery
+    @task = Task.find_by(id: params[:id])
+
+    if code_submission[:task].to_i == @task.confirmation_code
+      if @task.update(status: 'Delivered')
+        render json: { message: 'The delivery submitted successfully' }
+      else
+        render json: { message: 'Failed to update the task status' }, status: :unprocessable_entity
+      end
+    else
+      render json: { message: 'Wrong code' }
+    end
   end
 
   def my_supervisors
@@ -81,5 +95,9 @@ class Api::V1::AgentsController < ApplicationController
     return if Supervision.exists?(supervisor_id:, agent_id: current_agent.id)
 
     raise ActiveRecord::RecordNotDestroyed, "The task isn't under you supervisors"
+  end
+
+  def code_submission
+    params.permit(:task)
   end
 end

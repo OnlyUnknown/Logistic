@@ -9,6 +9,7 @@ class CreateTasks < ActiveRecord::Migration[7.0]
       t.belongs_to :customer, foreign_key: true, index: true
       t.string :status
       t.float :price
+      t.integer :confirmation_code
       t.string :current_location
       t.float :total
 
